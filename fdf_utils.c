@@ -1,3 +1,4 @@
+#include "fdf.h"
 
 int	creat_trgb(int t, int r, int g, int b)
 {
@@ -22,4 +23,11 @@ int get_g(int trgb)
 int get_b(int trgb)
 {
 	return (trgb & 0xfFF);
+}
+
+int	absolute(int a)
+{
+	if (a < 0)
+		return (-a);
+	return (a);
 }

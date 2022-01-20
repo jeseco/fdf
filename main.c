@@ -1,7 +1,11 @@
 #include "minilibx/mlx.h"
 #include "time.h"
+#include "fdf.h"
 
-#define RED 0x00ff0000
+#define RED 	0x00ff0000
+#define GREY 	0x01808080
+#define WIDTH 	1920
+#define HEIGHT 	1080
 
 typedef	struct s_pixel {
 	int x;
@@ -40,7 +44,7 @@ void	swap(int *i_1, int *i_2)
 	i_2 = temp;
 }
 
-void	draw_line(void *img, int start_x, int start_y, int end_x, int end_y)
+void	draw_line(void *img, int start_x, int start_y, int end_x, int end_y, int color)
 {
     int dx;
 	int dy;
@@ -48,21 +52,21 @@ void	draw_line(void *img, int start_x, int start_y, int end_x, int end_y)
 
 	dx = end_x - start_x;
 	dy = end_y - start_y;
-	if ((unsigned int)dx < (unsigned int)dy)
+	if (absolute(dx) < absolute(dy))
 	{	
-		p = (2 * (unsigned int)dy) - (unsigned)dx;
+		p = 2 * absolute(dy) - absolute(dx);
 		while (start_y != end_y)
 		{
-			my_mlx_pixel_put(img, start_x, start_y, RED);
+			my_mlx_pixel_put(img, start_x, start_y, color);
 			if (dy < 0)
 				start_y-- ;
 			else
 				start_y++ ;
 			if (p < 0)
-				p = p + 2 * (unsigned int)dx;
+				p = p + 2 * absolute(dx);
 			else
 			{
-				p = p + (2 * (unsigned int)dx) - (2 * (unsigned int)dy);
+				p = p + (2 * absolute(dx)) - (2 * absolute(dy));
 				if (dx < 0)
 					start_x-- ;
 				else
@@ -72,19 +76,19 @@ void	draw_line(void *img, int start_x, int start_y, int end_x, int end_y)
 	}
 	else
 	{
-		p = (2 * (unsigned int)dx) - (unsigned)dy;
+		p = 2 * absolute(dx) - absolute(dy);
 		while (start_x != end_x)
 		{
-			my_mlx_pixel_put(img, start_x, start_y, RED);
+			my_mlx_pixel_put(img, start_x, start_y, color);
 			if (dx < 0)
 				start_x-- ;
 			else
 				start_x++ ;
 			if (p < 0)
-				p = p + 2 * (unsigned int)dy;
+				p = p + 2 * absolute(dy);
 			else
 			{
-				p = p + (2 * (unsigned int)dy) - (2 * (unsigned int)dx);
+				p = p + (2 * absolute(dy)) - (2 * absolute(dx));
 				if (dy < 0)
 					start_y-- ;
 				else
@@ -92,13 +96,24 @@ void	draw_line(void *img, int start_x, int start_y, int end_x, int end_y)
 			}
 		}
 	}
-	// [ ] check if dx > dy = p = 2 * dy - dx || dy > dx = p = 2 * dx - dy && search x, y++
 }
 
-int	close(t_vars *vars)
+void	show_grid(void *img, int color)
 {
-	mlx_destroy_window(vars->mlx, vars->win);
-	return (0);
+	int i;
+
+	i = 0;
+	while (i <= WIDTH)
+	{
+		draw_line(img, i, 0, i, HEIGHT, color);
+		i += 20;
+	}
+	i = 0;
+	while (i <= HEIGHT)
+	{
+		draw_line(img, 0, i, WIDTH, i, color);
+		i += 20;
+	}
 }
 
 int main(void)
@@ -111,15 +126,8 @@ int main(void)
 	img.img = mlx_new_image(vars.mlx, 1920, 1080);
 	img.addr = mlx_get_data_addr(img.img, &img.bits_per_pixel, &img.line_length, &img.endian);
 
-	// #1 vertical 
-	draw_line(&img, 960, 440, 960, 640);
-	//#2 horizontal(x,   y,   x2,   y2)
-	draw_line(&img, 920, 590, 1000, 500);
-	// #3 45 down
-	draw_line(&img, 920, 500, 1000, 590);
-
+	show_grid(&img, GREY);
 	mlx_put_image_to_window(vars.mlx, vars.win, img.img, 0, 0);
 	mlx_loop(vars.mlx);
-	mlx_hook(vars.win, 2, 1L<<0, close, &vars);
 	return (0);
 }
