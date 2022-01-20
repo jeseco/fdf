@@ -113,12 +113,10 @@ int main(void)
 
 	// #1 vertical 
 	draw_line(&img, 960, 440, 960, 640);
-	// #2 horizontal
-	draw_line(&img, 860, 540, 1060, 540);
+	//#2 horizontal(x,   y,   x2,   y2)
+	draw_line(&img, 920, 590, 1000, 500);
 	// #3 45 down
-	draw_line(&img, 920, 500, 1000, 580);
-	// #4 45 up 
-	draw_line(&img, 1000, 500, 500, 250);
+	draw_line(&img, 920, 500, 1000, 590);
 
 	mlx_put_image_to_window(vars.mlx, vars.win, img.img, 0, 0);
 	mlx_loop(vars.mlx);
