@@ -1,11 +1,17 @@
-NAME = fdf
+NAME 	= fdf
 CC		= gcc
 CFLAGS	= -g -Wextra -Wall -Werror
 
-all : main
+all : main 
 
-main:
-	$(CC) $(CFLAGS) main.c fdf_utils.c minilibx/libmlx.a -lmlx -lXext -lX11 -L minilibx -o $(NAME)
+main: libft libftprintf
+	$(CC) $(CFLAGS) main.c libft/libft.a libft/libftprintf/libftprintf.a fdf_utils.c mlx/libmlx.a  -lmlx -framework Opengl -framework AppKit -L mlx -o $(NAME)
+
+libft:
+	cd libft && $(MAKE)
+
+libftprintf:
+	cd libft/libftprintf && $(MAKE)
 
 PHONY.: clean fclean re
 
