@@ -5,13 +5,16 @@ CFLAGS	= -g -Wextra -Wall -Werror
 all : main 
 
 main: libft libftprintf
-	$(CC) $(CFLAGS) main.c libft/libft.a libft/libftprintf/libftprintf.a fdf_utils.c mlx/libmlx.a  -lmlx -framework Opengl -framework AppKit -L mlx -o $(NAME)
+	$(CC) $(CFLAGS) srcs/main.c libft/libft.a libft/libftprintf/libftprintf.a srcs/fdf_utils.c mlx/libmlx.a  -lmlx -framework Opengl -framework AppKit -L mlx -o $(NAME)
 
 libft:
 	cd libft && $(MAKE)
 
 libftprintf:
 	cd libft/libftprintf && $(MAKE)
+
+parsing:
+	$(CC) $(CFLAGS) srcs/parsing.c libft/libft.a libft/get_next_line_utils.c -o parsing
 
 PHONY.: clean fclean re
 

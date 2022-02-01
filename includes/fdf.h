@@ -14,9 +14,9 @@
 # define ESC_KEY		53
 
 typedef struct s_pixel {
-	int	x;
-	int	y;
-	int	z;
+	int	x_pos;
+	int	y_pos;
+	int	z_pos;
 	int	color;
 }		t_pixel;
 
@@ -39,5 +39,7 @@ int	get_r(int trgb);
 int get_g(int trgb);
 int get_b(int trgb);
 int absolute(int a);
+int	get_x(char *c_data);
+int get_y(char *c_data);
 
 #endif

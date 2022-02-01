@@ -15,38 +15,28 @@
 */
 
 //measure longest line in from 0 to '\n' or from '\n'+1 to '\n' and return value x for **map
-int get_x(char *c_data)
+int get_y(char *c_data)
 {
-    int x_save;
-    int x_current;
     int i;
+    int x;
 
     i = 0;
-    x_current = 0;
-    x_save = 0;
-    while (c_data[i])
+    x = 1;
+    while (c_data[i++] != '\n')
     {
-        if ((c_data[i] >= 48 && c_data[i] <= 57) || c_data[i] == 45)
+        if (c_data[i] == 32)
         {
-            x_current++;
-            while ((c_data[i] >= 48 && c_data[i] <= 57) || c_data[i] == 45)
+            while (c_data[i] == 32)
                 i++;
-        }
-        while (c_data[i] == 32)
-            i++;
-        if (c_data[i] == '\n')
-        {
-            if (x_current > x_save)
-                x_save = x_current;
-            x_current = 0;
-            i++ ;
+            if (c_data[i] != 32 && c_data[i] != '\n')
+                x++;
         }
     }
-    return (x_save);
+    return (x);
 }
 
 //measure # of '\n' in c_data and return value y for **map.
-int get_y(char *c_data)
+int get_x(char *c_data)
 {
     int i;
     int y;
@@ -69,49 +59,43 @@ t_pixel **create_empty_map(int x,int y)
     int     i;
 
     i = 0;
-    map = (t_pixel **)malloc(sizeof(t_pixel) * y);
-    while (i <= y)
-        map[i++] = malloc(sizeof(t_pixel) * x + 1);
+    map = (t_pixel **)malloc(sizeof(t_pixel) * x);
+    while (i <= x)
+        map[i++] = malloc(sizeof(t_pixel) * y);
     return (map);
 }
 
 // after the creation of t_pixel map[get_x(c_data)][get_y(c_data)], we can parse char to int from c_data into the map itself.
 void    fill_map_data(t_pixel **map, char *c_data)
 {
-    int col;
-    int row;
     int x;
     int y;
     int i;
 
-    col = get_x(c_data);
-    row = get_y(c_data);
     x = 0;
     y = 0;
     i = 0;
-    while (y <= row)
+    while (c_data[i])
     {
-        while (x <= col)
+        map[x][y].x_pos = x;
+        map[x][y].y_pos = y;
+        if ((c_data[i] >= 48 && c_data[i] <= 57) || c_data[i] == 45)
         {
-            map[x][y].x = x;
-            map[x][y].y = y;
-            if ((c_data[i] >= 48 && c_data[i] <= 57) || c_data[i] == 45)
-            {
-                map[x][y].z = ft_atoi(c_data + i);
-                x++;
-                while ((c_data[i] >= 48 && c_data[i] <= 57) || c_data[i] == 45)
-                    i++;
-            }
-            while (c_data[i] == 32)
+            map[x][y].z_pos = ft_atoi(c_data + i);
+            y++;
+            while ((c_data[i] >= 48 && c_data[i] <= 57) || c_data[i] == 45)
                 i++;
-            if (c_data[i] == '\n')
-            {
-                i++;
-                y++;
-                x = 0;
-            }
         }
-        y++;
+        while (c_data[i] == 32)
+            i++;
+        if (c_data[i] == '\n')
+        {
+            i++ ;
+            y = 0;
+            x++ ;
+        }
+        if (c_data[i] == '\0')
+            return ;
     }
 }
 
@@ -138,7 +122,7 @@ void    parsing_char_to_t_pixel(fd)
     int x = get_x(c_data);
     map = create_empty_map(get_x(c_data), get_y(c_data));
     fill_map_data(map, c_data);
-    printf("\nc_data = \n%s\n\ny = %d\n\nx = %d\n\nmap[3][3] = %d\n\n", c_data, y, x, map[3][3].z);
+    printf("\nc_data = \n%s\n\ny = %d\n\nx = %d\n\nmap[3][3] = %d\n\n", c_data, y, x, map[3][3].z_pos);
 }
 
 // main for testing purposes. 

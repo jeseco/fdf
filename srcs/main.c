@@ -15,8 +15,8 @@
 
 #include "mlx/mlx.h"
 #include "time.h"
-#include "includes/fdf.h"
-#include "includes/libft.h"
+#include "../includes/fdf.h"
+#include "../includes/libft.h"
 
 void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
 {
