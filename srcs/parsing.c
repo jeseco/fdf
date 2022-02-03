@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parsing.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jcourtem <jcourtem@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/02/02 09:33:27 by jcourtem          #+#    #+#             */
+/*   Updated: 2022/02/03 16:17:08 by jcourtem         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 
 #include <limits.h>
 #include <fcntl.h>
@@ -79,11 +91,11 @@ void    fill_map_data(t_pixel **map, char *c_data)
     {
         map[x][y].x_pos = x;
         map[x][y].y_pos = y;
-        if ((c_data[i] >= 48 && c_data[i] <= 57) || c_data[i] == 45)
+        if (c_data[i] >= 33 && c_data[i] <= 126)
         {
             map[x][y].z_pos = ft_atoi(c_data + i);
             y++;
-            while ((c_data[i] >= 48 && c_data[i] <= 57) || c_data[i] == 45)
+            while (c_data[i] != 32 && c_data[i] != '\n' && c_data[i] != '\0')
                 i++;
         }
         while (c_data[i] == 32)
@@ -99,22 +111,21 @@ void    fill_map_data(t_pixel **map, char *c_data)
     }
 }
 
-
-
 // read() from fd to c_data everything that is found in fd.
 // make t_pixel **map with c_data
 // parse c_data to int in **map
-void    parsing_char_to_t_pixel(fd)
+char    **parsing_char_to_t_pixel(fd)
 {
     char    *c_data = NULL;
-    char    buffer[1024];
+    char    buffer[100001];
     int     bytes;
     t_pixel **map;
 
     bytes = 1;
     while (bytes > 0)
     {
-        bytes = read(fd, buffer, 1024);
+        bytes = read(fd, buffer, 100000);
+        buffer[bytes] = '\0';
         if (bytes > 0)
             c_data = gnl_strcat(c_data, buffer);
     }
@@ -122,7 +133,7 @@ void    parsing_char_to_t_pixel(fd)
     int x = get_x(c_data);
     map = create_empty_map(get_x(c_data), get_y(c_data));
     fill_map_data(map, c_data);
-    printf("\nc_data = \n%s\n\ny = %d\n\nx = %d\n\nmap[3][3] = %d\n\n", c_data, y, x, map[3][3].z_pos);
+    return (map);
 }
 
 // main for testing purposes. 

@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   draw_line.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jcourtem <jcourtem@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/02/02 09:33:39 by jcourtem          #+#    #+#             */
+/*   Updated: 2022/02/02 11:15:19 by jcourtem         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "fdf.h"
 
 /*
@@ -15,34 +27,34 @@
 
 int	is_same_coordinate(t_pixel pixel_start, t_pixel pixel_end)
 {
-	if (pixel_start.x == pixel_end.x && pixel_start.y == pixel_end.y)
+	if (pixel_start.x_pos == pixel_end.x_pos && pixel_start.y_pos == pixel_end.y_pos)
 		return (1);
 	return (0);
 }
 
 int differrenceTwiceGreatestLowest(t_pixel pixel_start, t_pixel pixel_end)
 {
-	if (pixel_end.x - pixel_start.x < pixel_end.y - pixel_start.y)
-		return ((2 * absolute(pixel_end.y - pixel_start.y)) - absolute(pixel_end.x - pixel_start.x));
-	return ((2 * absolute(pixel_end.x - pixel_start.x)) - absolute(pixel_end.y - pixel_start.y));
+	if (pixel_end.x_pos - pixel_start.x_pos < pixel_end.y_pos - pixel_start.y_pos)
+		return ((2 * absolute(pixel_end.y_pos - pixel_start.y_pos)) - absolute(pixel_end.x_pos - pixel_start.x_pos));
+	return ((2 * absolute(pixel_end.x_pos - pixel_start.x_pos)) - absolute(pixel_end.y_pos - pixel_start.y_pos));
 }
 
 void	update_coordinate(t_pixel *pixel_start, t_pixel *pixel_end, int *rise_difference)
 {
-	if ((absolute(pixel_end->x - pixel_start->x)) < (absolute(pixel_end->y - pixel_start->y)))
+	if ((absolute(pixel_end->x_pos - pixel_start->x_pos)) < (absolute(pixel_end->y_pos - pixel_start->y_pos)))
 	{
-		if (pixel_start->y < pixel_end->y)
-			pixel_start->y++ ;
+		if (pixel_start->y_pos < pixel_end->y_pos)
+			pixel_start->y_pos++ ;
 		else
-			pixel_start->y-- ;
+			pixel_start->y_pos-- ;
 	}
 	else
-		if (pixel_start->x < pixel_end->x)
-			pixel_start->x++ ;
+		if (pixel_start->x_pos < pixel_end->x_pos)
+			pixel_start->x_pos++ ;
 		else
-			pixel_start->x-- ;
+			pixel_start->x_pos-- ;
 	if (*rise_difference < 0)
-
+		// [ ] finish function
 }
 
 // [ ] int	update_rise()
@@ -52,7 +64,7 @@ void	draw_line(void *img, t_pixel pixel_start, t_pixel pixel_end)
 	int rise_difference = differenceTwiceGreatestLowest(pixel_start, pixel_end);
 	while (!(is_same_coordonate(pixel_start, pixel_end)));
 	{
-		my_mlx_pixel_put(img, pixel_start.x, pixel_start.y, RED);
+		my_mlx_pixel_put(img, pixel_start.x_pos, pixel_start.y_pos, RED);
 		update_coordinate(&pixel_start, &pixel_end, rise_difference);
 		update_rise_difference(&pixel_start, pixel_end, rise_difference);
 	}
