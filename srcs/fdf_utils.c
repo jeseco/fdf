@@ -6,11 +6,11 @@
 /*   By: jcourtem <jcourtem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/02 09:33:35 by jcourtem          #+#    #+#             */
-/*   Updated: 2022/02/02 09:33:36 by jcourtem         ###   ########.fr       */
+/*   Updated: 2022/02/09 15:46:32 by jcourtem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "includes/fdf.h"
+#include "../includes/fdf.h"
 
 int	creat_trgb(int t, int r, int g, int b)
 {
@@ -43,3 +43,21 @@ int	absolute(int a)
 		return (-a);
 	return (a);
 }
+
+// void	show_grid(void *img, int color)
+// {
+// 	int	i;
+
+// 	i = 0;
+// 	while (i <= WIDTH)
+// 	{
+// 		draw_line(img, i, 0, i, HEIGHT, color);
+// 		i += 20;
+// 	}
+// 	i = 0;
+// 	while (i <= HEIGHT)
+// 	{
+// 		draw_line(img, 0, i, WIDTH, i, color);
+// 		i += 20;
+// 	}
+// }

@@ -1,11 +1,13 @@
 NAME 	= fdf
 CC		= gcc
 CFLAGS	= -g -Wextra -Wall -Werror
+FILES	= srcs/main.c \
+		  srcs/parsing.c 
 
 all : main 
 
 main: libft libftprintf
-	$(CC) $(CFLAGS) srcs/main.c libft/libft.a libft/libftprintf/libftprintf.a srcs/fdf_utils.c mlx/libmlx.a  -lmlx -framework Opengl -framework AppKit -L mlx -o $(NAME)
+	$(CC) $(CFLAGS) $(FILES) libft/libft.a libft/libftprintf/libftprintf.a srcs/fdf_utils.c mlx/libmlx.a  -lmlx -framework Opengl -framework AppKit -L mlx -o $(NAME)
 
 libft:
 	cd libft && $(MAKE)

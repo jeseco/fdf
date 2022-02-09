@@ -33,13 +33,15 @@ typedef struct s_data {
 	int		endian;
 }		t_data;
 
-int	creat_trgb(int t, int r, int g, int b);
-int	get_t(int trgb);
-int	get_r(int trgb);
-int get_g(int trgb);
-int get_b(int trgb);
-int absolute(int a);
-int	get_x(char *c_data);
-int get_y(char *c_data);
+int		creat_trgb(int t, int r, int g, int b);
+int		get_t(int trgb);
+int		get_r(int trgb);
+int 	get_g(int trgb);
+int 	get_b(int trgb);
+int 	absolute(int a);
+int		get_x(char *c_data);
+int 	get_y(char *c_data);
+void	draw_line(void *img, t_pixel start, t_pixel end, int color);
+t_pixel	**parsing_char_to_t_pixel(int fd);
 
 #endif

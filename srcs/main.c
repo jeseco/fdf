@@ -6,14 +6,14 @@
 /*   By: jcourtem <jcourtem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/25 14:55:58 by jcourtem          #+#    #+#             */
-/*   Updated: 2022/02/02 09:33:16 by jcourtem         ###   ########.fr       */
+/*   Updated: 2022/02/09 15:58:44 by jcourtem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 
 # include <fcntl.h>
 
-#include "mlx/mlx.h"
+#include "../mlx/mlx.h"
 #include "time.h"
 #include "../includes/fdf.h"
 #include "../includes/libft.h"
@@ -26,75 +26,58 @@ void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
 	*(unsigned int *)dst = color;
 }
 
-void	draw_line(void *img, int start_x, int start_y, int end_x, int end_y, int color)
+// clean this shit! 
+void	draw_line(void *img, t_pixel start, t_pixel end, int color)
 {
 	int	dx;
 	int	dy;
 	int	p;
 
-	dx = end_x - start_x;
-	dy = end_y - start_y;
+	dx = end.x_pos - start.x_pos;
+	dy = end.y_pos - start.y_pos;
 	if (absolute(dy) > absolute(dx))
 	{	
 		p = 2 * absolute(dy) - absolute(dx);
-		while (start_y != end_y)
+		while (start.y_pos != end.y_pos)
 		{
-			my_mlx_pixel_put(img, start_x, start_y, color);
+			my_mlx_pixel_put(img, start.x_pos, start.x_pos, color);
 			if (dy < 0)
-				start_y-- ;
+				start.y_pos-- ;
 			else
-				start_y++ ;
+				start.y_pos++ ;
 			if (p < 0)
 				p = p + 2 * absolute(dx);
 			else
 			{
 				p = p + (2 * absolute(dx)) - (2 * absolute(dy));
 				if (dx < 0)
-					start_x-- ;
+					start.x_pos-- ;
 				else
-					start_x++ ;
+					start.x_pos++ ;
 			}
 		}
 	}
 	else
 	{	
 		p = 2 * absolute(dx) - absolute(dy);
-		while (start_x != end_x)
+		while (start.x_pos != end.x_pos)
 		{
-			my_mlx_pixel_put(img, start_x, start_y, color);
+			my_mlx_pixel_put(img, start.x_pos, start.x_pos, color);
 			if (dx < 0)
-				start_x-- ;
+				start.x_pos-- ;
 			else
-				start_x++ ;
+				start.x_pos++ ;
 			if (p < 0)
 				p = p + 2 * absolute(dy);
 			else
 			{
 				p = p + (2 * absolute(dy)) - (2 * absolute(dx));
 				if (dx < 0)
-					start_y-- ;
+					start.y_pos-- ;
 				else
-					start_y++ ;
+					start.y_pos++ ;
 			}
 		}
-	}
-}
-
-void	show_grid(void *img, int color)
-{
-	int	i;
-
-	i = 0;
-	while (i <= WIDTH)
-	{
-		draw_line(img, i, 0, i, HEIGHT, color);
-		i += 20;
-	}
-	i = 0;
-	while (i <= HEIGHT)
-	{
-		draw_line(img, 0, i, WIDTH, i, color);
-		i += 20;
 	}
 }
 
@@ -112,8 +95,12 @@ int	main(int argc, char **argv)
 {
 	t_mlx 	mlx;
 	t_data	img;
+	t_pixel	**map;
 	int		fd;
-	char	*gnl_rtn;
+
+	// variable for put_map
+	int	x = 0;
+	int y = 0;
 
 	mlx.server = mlx_init();
 	mlx.window = mlx_new_window(mlx.server, HEIGHT, WIDTH, "window");
@@ -125,11 +112,17 @@ int	main(int argc, char **argv)
 		exit (EXIT_SUCCESS);
 	}
 	fd = open(argv[1], O_RDWR);
-	gnl_rtn = get_next_line(fd);
-	while (gnl_rtn != NULL)
+	map = parsing_char_to_t_pixel(fd);
+	while (x <= 10)
 	{
-		ft_printf("%s", gnl_rtn);
-		gnl_rtn = get_next_line(fd);
+		while (y <= 10)
+		{
+			if (y < 10)
+				draw_line(&img, map[x][y], map[x][y + 1], GREY);
+			y++;
+		}
+		y = 0;
+		x++;
 	}
 	mlx_put_image_to_window(mlx.server, mlx.window, img.img, 0, 0);
 	mlx_hook(mlx.window, 2, 0x1L, &key_press, &mlx);
