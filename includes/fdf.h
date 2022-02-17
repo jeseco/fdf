@@ -5,7 +5,10 @@
 # include <stddef.h>
 # include <stdlib.h>
 # include <unistd.h>
+
 # include "libft.h"
+# include "mlx.h"
+# include "mlx_int.h"
 
 # define RED 			0x00ff0000
 # define GREY 			0x01808080
