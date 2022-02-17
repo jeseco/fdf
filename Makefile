@@ -2,7 +2,10 @@ NAME 	= fdf
 CC		= gcc
 CFLAGS	= -g -Wextra -Wall -Werror
 FILES	= srcs/main.c \
-		  srcs/parsing.c 
+		  srcs/parsing.c \
+		  srcs/fdf_utils \
+		  srcs/fdf_main.c \
+		  srcs/fdf_draw_line.c 
 
 all : main 
 
