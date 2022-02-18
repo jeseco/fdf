@@ -17,8 +17,6 @@
 # include <stdlib.h>
 # include <unistd.h>
 
-# include "../libft.h"
-
 char	*get_next_line(int fd);
 char	*gnl_strchr(char *s, char c);
 char	*gnl_strcat(char *dest, char *src);

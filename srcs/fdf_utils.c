@@ -44,20 +44,30 @@ int	absolute(int a)
 	return (a);
 }
 
-void	show_grid(void *img, int color)
+int key_press(int key, t_mlx *mlx)
 {
-	int	i;
-
-	i = 0;
-	while (i <= WIDTH)
+	if (key == ESC_KEY)
 	{
-		draw_line(img, i, 0, i, HEIGHT, color);
-		i += 20;
+		mlx_destroy_window(mlx->server, mlx->window);
+		exit (EXIT_SUCCESS);
 	}
-	i = 0;
-	while (i <= HEIGHT)
-	{
-		draw_line(img, 0, i, WIDTH, i, color);
-		i += 20;
-	}
+	return (0);
 }
+
+// void	show_grid(void *img, int color)
+// {
+// 	int	i;
+
+// 	i = 0;
+// 	while (i <= WIDTH)
+// 	{
+// 		draw_line(img, i, 0, i, HEIGHT, color);
+// 		i += 20;
+// 	}
+// 	i = 0;
+// 	while (i <= HEIGHT)
+// 	{
+// 		draw_line(img, 0, i, WIDTH, i, color);
+// 		i += 20;
+// 	}
+// }

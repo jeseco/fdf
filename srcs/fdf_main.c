@@ -10,10 +10,11 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-
-# include <fcntl.h>
+#include <stdio.h>
+#include <fcntl.h>
 
 #include "../includes/fdf.h"
+#include "../includes/libft.h"
 
 void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
 {
@@ -23,15 +24,6 @@ void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
 	*(unsigned int *)dst = color;
 }
 
-int key_press(int key, t_mlx *mlx)
-{
-	if (key == ESC_KEY)
-	{
-		mlx_destroy_window(mlx->server, mlx->window);
-		exit (EXIT_SUCCESS);
-	}
-	return (0);
-}
 
 int	main(int argc, char **argv)
 {
@@ -40,34 +32,16 @@ int	main(int argc, char **argv)
 	t_pixel	**map;
 	int		fd;
 
-	// variable for put_map
-	int	x = 0;
-	int y = 0;
-
 	mlx.server = mlx_init();
 	mlx.window = mlx_new_window(mlx.server, HEIGHT, WIDTH, "window");
 	img.img = mlx_new_image(mlx.window, HEIGHT, WIDTH);
 	img.addr = mlx_get_data_addr(img.img, &img.bits_per_pixel, &img.line_length, &img.endian);
 	if (argc <= 1)
-	{
-		ft_printf("ERROR: fdf requires a minimum of 1 arguments.\n");
 		exit (EXIT_SUCCESS);
-	}
 	fd = open(argv[1], O_RDWR);
 	map = parsing_char_to_t_pixel(fd);
-	while (x <= 10)
-	{
-		while (y <= 10)
-		{
-			if (y < 10)
-				draw_line(&img, map[x][y], map[x][y + 1], GREY);
-			y++;
-		}
-		y = 0;
-		x++;
-	}
+	printf("map.1.1 = %i", map[1][1].x_pos);
 	mlx_put_image_to_window(mlx.server, mlx.window, img.img, 0, 0);
-	mlx_hook(mlx.window, 2, 0x1L, &key_press, &mlx);
 	mlx_loop(mlx.server);
 	return (0);
 }

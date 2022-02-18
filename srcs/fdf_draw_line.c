@@ -12,10 +12,10 @@
 
 #include "../includes/fdf.h"
 
-void	draw_line(void *img, t_pixel p_start, t_pixel p_end)
-{
+// void	draw_line(void *img, t_pixel p_start, t_pixel p_end)
+// {
 	
-}
+// }
 
 // clean this shit! 
 void	draw_line(void *img, t_pixel start, t_pixel end, int color)
