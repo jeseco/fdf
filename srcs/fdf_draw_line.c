@@ -14,12 +14,7 @@
 
 #include "../includes/fdf.h"
 
-// void	draw_line(void *img, t_pixel p_start, t_pixel p_end)
-// {
-	
-// }
-
-void	draw_line(void *img, t_pixel start, t_pixel end, int color)
+void	draw_line(t_mlx mlx, t_pixel start, t_pixel end)
 {
 	int	dx;
 	int	dy;
@@ -32,7 +27,7 @@ void	draw_line(void *img, t_pixel start, t_pixel end, int color)
 		p = 2 * absolute(dy) - absolute(dx);
 		while (start.y_pos != end.y_pos)
 		{
-			my_mlx_pixel_put(img, start.x_pos, start.x_pos, color);
+			mlx_pixel_put(mlx.server, mlx.window, start.x_pos, end.x_pos, RED);
 			if (dy < 0)
 				start.y_pos-- ;
 			else
@@ -54,7 +49,7 @@ void	draw_line(void *img, t_pixel start, t_pixel end, int color)
 		p = 2 * absolute(dx) - absolute(dy);
 		while (start.x_pos != end.x_pos)
 		{
-			my_mlx_pixel_put(img, start.x_pos, start.x_pos, color);
+			mlx_pixel_put(mlx.server, mlx.window, start.x_pos, end.x_pos, RED);
 			if (dx < 0)
 				start.x_pos-- ;
 			else

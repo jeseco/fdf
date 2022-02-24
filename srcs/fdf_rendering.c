@@ -27,6 +27,7 @@ void iso(t_pixel **map, char *c_data)
 
     while (x <= get_x(c_data))
     {
+        y = 0;
         while(y <= get_y(c_data))
         {
             if (x == 0)
@@ -52,21 +53,19 @@ void render(char *str, t_mlx mlx)
     int     fd;
     char    *c_data;
     t_pixel **map;
-    t_data  img;
 
     fd = open(str, O_RDONLY);
     c_data = make_str(fd);
     map = parsing_char_to_pixel(c_data);
-    img.image = mlx_new_image(mlx.server, HEIGHT, WIDTH);
     iso(map, c_data);
     while (x <= get_x(c_data))
     {
         while (y <= get_y(c_data))
         {
-            draw_line(&img, map[x][y], map[x][y + 1], RED);
+            draw_line(mlx, map[x][y], map[x][y + 1]);
             y++;
             if (x > 0)
-                draw_line(&img, map[x][y], map[x - 1][y], RED);
+                draw_line(mlx, map[x][y], map[x - 1][y]);
             if (y == get_y(c_data))
             {
                 y = 0;
@@ -76,5 +75,4 @@ void render(char *str, t_mlx mlx)
         }
     }
     free (c_data);
-    mlx_put_image_to_window(mlx.server, mlx.window, img.image, HEIGHT, WIDTH);
 }

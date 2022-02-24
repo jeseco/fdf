@@ -60,7 +60,7 @@ int 	get_y(char *c_data);
 
 t_pixel	**parsing_char_to_pixel(char *str);
 
-void	draw_line(void *img, t_pixel start, t_pixel end, int color);
+void	draw_line(t_mlx mlx, t_pixel start, t_pixel end);
 
 void 	render(char *str, t_mlx mlx);
 

@@ -1,5 +1,32 @@
 LOG:
 
+-------------------------------------------------------------------------------
+
+2022-02-24: git commit = b3a0973cee753042541fe626bdaa4a117e3f1a51
+
+Now that the main logic for every file is build, we need to test the program and see that everything works perfectly. 
+
+First we need to fix the segfault. 
+
+It happens because the value of x and y aren't reset after the calculation of the max value in fdf_rendering.c:iso().
+
+The puspose of this function is the set the value of x_pos and y_pox for every item in the t_pixel **map to the corresponding coordonates needed to represent the map in a isometric fashion.
+
+The problem that we encounter is that the y value is not reset to 0, which we fixed by adding a y = 0 before the while (y <= get_y(c_data)). This will reset the value of y for every row in the t_pixel matrix table.
+
+but we still get a segfault. c_data is empty, freed by the function parsing_char_to_pixel when in the iso function.
+
+- Sometime the segfault happens in the fdf_utils.c:my_mlx_pixel_put(), when  (unsigned int *)dst = color;
+
+	This happens because dst is null even if the previous statement:
+	`dst = data->addr + (y * data->line_length + x * (data->bits_per_pixel / 8));`
+
+	In this situation, data is a t_data *data argument passed to the function, which is supposed to be the image to put the pixel on.
+
+	A simple fix to this situation was to use the mlx_pixel_put in draw_line instead of my_mlx_pixel_put. We now don't have any segfaults but the rendered result is not what is expected, everything is on the top of the screen.
+
+-------------------------------------------------------------------------------
+
 2022-02-18: git commit = cfe3cb07f9fbfe4381a9941f978626389890e721
 
 Now that the makefile works everytime we call it, it is time to fully clean the structure of the project and to fix the segfault that we receive from running it.
@@ -28,8 +55,11 @@ once in, it...:
 in our case, it will return false on 2 and go to 3.
 In mlx_int_new_image, when the program hits img->image = XCreateImage(xvar->display, xvar->visual, xvar->depth, format, 0, img->data,width,height,32,0);, there is an error because the next statement, if (!img->image) is true and frees the image.
 
-I got tired of looking for what is going on in a library that is probably, as stated in their own docs, poorly build. I gonna rebuild my one main to see. 
-git commit = 
+I got tired of looking for what is going on in a library that is probably, as stated in their own docs, poorly build. I gonna rebuild my one main to see.
+
+AFter rebuilding the main file, I builded the logiv for the rendering file. 
+
+git commit = b3a0973cee753042541fe626bdaa4a117e3f1a51
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 2022-02-18: git commit = 617ebfd0438664a3a822c773202f5f8c4f316849

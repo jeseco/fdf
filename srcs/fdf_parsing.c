@@ -104,6 +104,5 @@ t_pixel	**parsing_char_to_pixel(char *c_data)
 
 	map = create_empty_map(get_x(c_data), get_y(c_data));
 	fill_map_data(map, c_data);
-	free (c_data);
 	return (map);
 }
