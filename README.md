@@ -1,5 +1,37 @@
 LOG:
 
+2022-02-18: git commit = cfe3cb07f9fbfe4381a9941f978626389890e721
+
+Now that the makefile works everytime we call it, it is time to fully clean the structure of the project and to fix the segfault that we receive from running it.
+
+tracking the segfault: 
+
+1. running lldb debbug in vscode. 
+    last called stack : mlx_get_data_addr.
+
+I fixed this bug before I needed to rebuild my vm, this as something to do with how the structure from mlx. 
+
+Upon testing, we can see that there is a problem when trying to creat a new img.img with mlx_new_image.
+
+It gets called with the following variable:
+1. mlx.window, 
+2. HEIGHT="1080", 
+3. WIDTH="1920"
+
+once in, it...: 
+1. initialize a new t_img *img;
+2. check if (xvar="mlx.window"->use_xshm)
+	2.2. if yes, check if img = mlx_int_new_xshm_image(xvar, width, height,zPixmap)
+	2.3. return (img);
+3. else, return (mlx_int_new_image(xvar, widht, height, ZPixmap))
+
+in our case, it will return false on 2 and go to 3.
+In mlx_int_new_image, when the program hits img->image = XCreateImage(xvar->display, xvar->visual, xvar->depth, format, 0, img->data,width,height,32,0);, there is an error because the next statement, if (!img->image) is true and frees the image.
+
+I got tired of looking for what is going on in a library that is probably, as stated in their own docs, poorly build. I gonna rebuild my one main to see. 
+git commit = 
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
 2022-02-18: git commit = 617ebfd0438664a3a822c773202f5f8c4f316849
 
 Today, I'm trying to fix the architecture of the program and its arborescence, so that it will compile on linux. 
@@ -46,4 +78,4 @@ libft:
 trying to declare the recipe "libft" as .PHONY because we have a file name libft in the dir.
 This works. The reason being that, when a file exist in the current dir or sub dir, if a recipe in the makefile as the same name, makefile may confuse the file for the recipe and believe it is up to date even when it is not, hence not running the recipe and missing dependencies. 
 
-git commit = 
+git commit = cfe3cb07f9fbfe4381a9941f978626389890e721.

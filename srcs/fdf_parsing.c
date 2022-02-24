@@ -10,6 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+// [ ] clean 
+
 #include <limits.h>
 #include <fcntl.h>
 #include <stdio.h>
@@ -59,9 +61,9 @@ t_pixel	**create_empty_map(int x, int y)
 	int			i;
 
 	i = 0;
-	map = (t_pixel **)malloc(sizeof(t_pixel) * x);
+	map = (t_pixel **)malloc(sizeof(t_pixel) * x + 1);
 	while (i <= x)
-		map[i++] = malloc(sizeof(t_pixel) * y);
+		map[i++] = malloc(sizeof(t_pixel) * y) + 1;
 	return (map);
 }
 
@@ -69,16 +71,13 @@ void	fill_map_data(t_pixel **map, char *c_data)
 {
 	int	x;
 	int	y;
-	int	i;
-	int base = 10;
+	int i;
 
 	x = 0;
 	y = 0;
 	i = 0;
 	while (c_data[i])
 	{
-		map[x][y].x_pos = x * base;
-		map[x][y].y_pos = y * base;
 		if (c_data[i] >= 33 && c_data[i] <= 126)
 		{
 			map[x][y].z_pos = ft_atoi(c_data + i);
@@ -99,23 +98,12 @@ void	fill_map_data(t_pixel **map, char *c_data)
 	}
 }
 
-t_pixel	**parsing_char_to_t_pixel(int fd)
+t_pixel	**parsing_char_to_pixel(char *c_data)
 {
-	char	*c_data;
-	char	buffer[100001];
-	int		bytes;
 	t_pixel	**map;
 
-	bytes = 1;
-	c_data = malloc(sizeof(char *) * 1000000000);
-	while (bytes > 0)
-	{
-		bytes = read(fd, buffer, 100000);
-		buffer[bytes] = '\0';
-		if (bytes > 0)
-			c_data = gnl_strcat(c_data, buffer);
-	}
 	map = create_empty_map(get_x(c_data), get_y(c_data));
 	fill_map_data(map, c_data);
+	free (c_data);
 	return (map);
 }

@@ -1,4 +1,6 @@
 
+// [ ] clean this shit! 
+
 #ifndef FDF_H
 # define FDF_H
 
@@ -20,16 +22,15 @@ typedef struct s_pixel {
 	int	x_pos;
 	int	y_pos;
 	int	z_pos;
-	int	color;
 }		t_pixel;
 
 typedef struct s_mlx{
-	void *server;
+	t_xvar *server;
 	void *window;
 }		t_mlx;
 
 typedef struct s_data {
-	void	*img;
+	void	*image;
 	char	*addr;
 	int		bits_per_pixel;
 	int		line_length;
@@ -51,16 +52,16 @@ int 	get_b(int trgb);
 
 int 	absolute(int a);
 
+void	my_mlx_pixel_put(t_data *data, int x, int y, int color);
 
-//		from fdf_parsing.c:
 int		get_x(char *c_data);
 
 int 	get_y(char *c_data);
 
-t_pixel	**parsing_char_to_t_pixel(int fd);
+t_pixel	**parsing_char_to_pixel(char *str);
 
-
-//		from fdf_draw_line.c:
 void	draw_line(void *img, t_pixel start, t_pixel end, int color);
+
+void 	render(char *str, t_mlx mlx);
 
 #endif
