@@ -1,4 +1,5 @@
 #include "../includes/fdf.h"
+#include <stdio.h>
 
 // [ ] clean
 
@@ -22,17 +23,18 @@ char *make_str(int fd)
 
 void iso(t_pixel **map, char *c_data)
 {
-    int x = get_x(c_data);
-    int y = get_y(c_data);
+    int x;
+    int y;
 
+    x = 0;
     while (x <= get_x(c_data))
     {
         y = 0;
         while(y <= get_y(c_data))
         {
-            if (x == 0)
+            if (y == 0)
             {
-                map[x][y].x_pos = map[x - 1][y].x_pos + 30;
+                map[x][y].x_pos = map[x - 1][y].x_pos - 30;
                 map[x][y].y_pos = map[x - 1][y].y_pos + 20;
             }
             else
@@ -53,19 +55,26 @@ void render(char *str, t_mlx mlx)
     int     fd;
     char    *c_data;
     t_pixel **map;
+    t_data  img;
 
     fd = open(str, O_RDONLY);
     c_data = make_str(fd);
+
+    int y_max = get_y(c_data);
+    int x_max = get_x(c_data);
+
+    img.image = mlx_new_image(mlx.server, WIDTH, HEIGHT);
+    img.addr = mlx_get_data_addr(&img.image, &img.bits_per_pixel, &img.line_length, &img.endian);
     map = parsing_char_to_pixel(c_data);
-    iso(map, c_data);
+    // iso(map, c_data);
     while (x <= get_x(c_data))
     {
-        while (y <= get_y(c_data))
+        while (y < get_y(c_data))
         {
-            draw_line(mlx, map[x][y], map[x][y + 1]);
+            draw_line(&img, map[x][y], map[x][y + 1]);
             y++;
             if (x > 0)
-                draw_line(mlx, map[x][y], map[x - 1][y]);
+                draw_line(&img, map[x][y], map[x - 1][y]);
             if (y == get_y(c_data))
             {
                 y = 0;
@@ -74,5 +83,6 @@ void render(char *str, t_mlx mlx)
             }
         }
     }
+    printf("get_y = %d \n get_x = %d\n", y_max, x_max);
     free (c_data);
 }

@@ -1,5 +1,7 @@
 LOG:
 
+Now we need to fix the isometric rendering of the map unto the image. 
+
 -------------------------------------------------------------------------------
 
 2022-02-24: git commit = b3a0973cee753042541fe626bdaa4a117e3f1a51
@@ -25,6 +27,8 @@ but we still get a segfault. c_data is empty, freed by the function parsing_char
 
 	A simple fix to this situation was to use the mlx_pixel_put in draw_line instead of my_mlx_pixel_put. We now don't have any segfaults but the rendered result is not what is expected, everything is on the top of the screen.
 
+
+git log : c120371ecc0c79c29c6ae6def008233a79410dc3
 -------------------------------------------------------------------------------
 
 2022-02-18: git commit = cfe3cb07f9fbfe4381a9941f978626389890e721

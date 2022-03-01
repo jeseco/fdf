@@ -25,7 +25,7 @@ int	get_y(char *c_data)
 	int	x;
 
 	i = 0;
-	x = 1;
+	x = 0;
 	while (c_data[i++] != '\n')
 	{
 		if (c_data[i] == 32)
@@ -78,6 +78,8 @@ void	fill_map_data(t_pixel **map, char *c_data)
 	i = 0;
 	while (c_data[i])
 	{
+		map[x][y].x_pos = x * 100;
+		map[x][y].y_pos	= y * 100;
 		if (c_data[i] >= 33 && c_data[i] <= 126)
 		{
 			map[x][y].z_pos = ft_atoi(c_data + i);
