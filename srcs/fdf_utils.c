@@ -6,11 +6,14 @@
 /*   By: jcourtem <jcourtem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/02 09:33:35 by jcourtem          #+#    #+#             */
-/*   Updated: 2022/02/09 15:46:32 by jcourtem         ###   ########.fr       */
+/*   Updated: 2022/03/24 14:01:11 by jcourtem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 // [ ] clean this shit! 
+#include <stdio.h>
+
+#include <mlx.h>
 
 #include "../includes/fdf.h"
 
@@ -46,16 +49,6 @@ int	absolute(int a)
 	return (a);
 }
 
-int key_press(int key, t_mlx *mlx)
-{
-	if (key == ESC_KEY)
-	{
-		mlx_destroy_window(mlx->server, mlx->window);
-		exit (EXIT_SUCCESS);
-	}
-	return (0);
-}
-
 void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
 {
 	char	*dst;
@@ -63,21 +56,3 @@ void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
 	dst = data->addr + (y * data->line_length + x * (data->bits_per_pixel / 8));
 	*(unsigned int *)dst = color;
 }
-
-// void	show_grid(void *img, int color)
-// {
-// 	int	i;
-
-// 	i = 0;
-// 	while (i <= WIDTH)
-// 	{
-// 		draw_line(img, i, 0, i, HEIGHT, color);
-// 		i += 20;
-// 	}
-// 	i = 0;
-// 	while (i <= HEIGHT)
-// 	{
-// 		draw_line(img, 0, i, WIDTH, i, color);
-// 		i += 20;
-// 	}
-// }

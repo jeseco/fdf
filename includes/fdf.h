@@ -7,9 +7,9 @@
 # include <stddef.h>
 # include <stdlib.h>
 # include <unistd.h>
+# include <fcntl.h>
+# include <mlx.h>
 
-# include "mlx.h"
-# include "mlx_int.h"
 # include "libft.h"
 
 # define RED 			0x00ff0000
@@ -25,7 +25,7 @@ typedef struct s_pixel {
 }		t_pixel;
 
 typedef struct s_mlx{
-	t_xvar *server;
+	void *server;
 	void *window;
 }		t_mlx;
 
@@ -63,5 +63,7 @@ t_pixel	**parsing_char_to_pixel(char *str);
 void	draw_line(t_data *img, t_pixel start, t_pixel end);
 
 void 	render(char *str, t_mlx mlx);
+
+int 	handle_key_input(int key, t_mlx *mlx);
 
 #endif

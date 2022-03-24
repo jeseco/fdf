@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parsing.c                                          :+:      :+:    :+:   */
+/*   fdf_parsing.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jcourtem <jcourtem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/02 09:33:27 by jcourtem          #+#    #+#             */
-/*   Updated: 2022/02/09 15:53:13 by jcourtem         ###   ########.fr       */
+/*   Updated: 2022/03/24 14:14:03 by jcourtem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,8 @@ void	fill_map_data(t_pixel **map, char *c_data)
 	x = 0;
 	y = 0;
 	i = 0;
+	map[x][y].x_pos = WIDTH / 2;
+	map[x][y].y_pos = 10;
 	while (c_data[i])
 	{
 		map[x][y].x_pos = x * 100;
@@ -100,10 +102,21 @@ void	fill_map_data(t_pixel **map, char *c_data)
 	}
 }
 
-t_pixel	**parsing_char_to_pixel(char *c_data)
+t_pixel	**parsing_char_to_pixel(char *file_name)
 {
 	t_pixel	**map;
+	char	buffer[1024];
+	char	*c_data;
+	int		bytes;
 
+	int fd;
+	bytes = 1;
+	fd = open(file_name, O_RDONLY);
+	while (bytes != 0)
+	{
+		bytes = read(fd, buffer, 1024);
+		c_data = ft_strjoin(c_data, buffer);
+	}
 	map = create_empty_map(get_x(c_data), get_y(c_data));
 	fill_map_data(map, c_data);
 	return (map);
