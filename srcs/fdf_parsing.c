@@ -6,7 +6,7 @@
 /*   By: jcourtem <jcourtem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/02 09:33:27 by jcourtem          #+#    #+#             */
-/*   Updated: 2022/03/24 14:14:03 by jcourtem         ###   ########.fr       */
+/*   Updated: 2022/03/30 13:51:52 by jcourtem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,52 +22,61 @@
 int	get_y(char *c_data)
 {
 	int	i;
-	int	x;
+	int	y;
 
 	i = 0;
-	x = 0;
-	while (c_data[i++] != '\n')
+	y = 0;
+	while (c_data[i] != '\n')
 	{
+		if (c_data[i] != 32 && c_data[i] != '\n')
+		{
+			y++;
+			while (c_data[i] != 32 && c_data[i] != '\n')
+				i++;
+		}
 		if (c_data[i] == 32)
 		{
 			while (c_data[i] == 32)
 				i++;
-			if (c_data[i] != 32 && c_data[i] != '\n')
-				x++;
 		}
 	}
-	return (x);
+	return (y);
 }
 
 int	get_x(char *c_data)
 {
 	int	i;
-	int	y;
+	int	x;
 
 	i = 0;
-	y = 0;
-	while (c_data[i])
+	x = 0;
+	while (c_data[i]) 
 	{
 		if (c_data[i] == '\n')
-			y++ ;
-		i++ ;
+			x++ ;
+		i++;
 	}
-	return (y);
+	return (x);
 }
 
-t_pixel	**create_empty_map(int x, int y)
+t_map	init_map(int x, int y)
 {
-	t_pixel		**map;
-	int			i;
+	t_map	map;
+	int		i;
 
 	i = 0;
-	map = (t_pixel **)malloc(sizeof(t_pixel) * x + 1);
-	while (i <= x)
-		map[i++] = malloc(sizeof(t_pixel) * y) + 1;
+	map.x_size = x;
+	map.y_size = y;
+	map.base = 50;
+	map.vertex = malloc(sizeof(t_vertex *) * x);
+	while (i < x)
+		map.vertex[i++] = malloc(sizeof(t_vertex *) * y);
+	map.vertex[0][0].x_pos = WIDTH / 2;
+	map.vertex[0][0].y_pos = 10;
 	return (map);
 }
 
-void	fill_map_data(t_pixel **map, char *c_data)
+void	fill_map_data(t_map *map, char *c_data)
 {
 	int	x;
 	int	y;
@@ -76,15 +85,24 @@ void	fill_map_data(t_pixel **map, char *c_data)
 	x = 0;
 	y = 0;
 	i = 0;
-	map[x][y].x_pos = WIDTH / 2;
-	map[x][y].y_pos = 10;
 	while (c_data[i])
 	{
-		map[x][y].x_pos = x * 100;
-		map[x][y].y_pos	= y * 100;
+		if (!y)
+		{	
+			if (x > y)
+			{
+				map->vertex[x][y].x_pos = map->vertex[0][0].x_pos - ((3 * map->base) * x);
+				map->vertex[x][y].y_pos = map->vertex[0][0].y_pos + ((2 * map->base) * x);
+			}
+		}
+		else
+		{
+			map->vertex[x][y].x_pos = map->vertex[x][y - 1].x_pos + (3 * map->base);
+			map->vertex[x][y].y_pos = map->vertex[x][y - 1].y_pos + (2 * map->base); // [ ] sigsev
+		}
 		if (c_data[i] >= 33 && c_data[i] <= 126)
 		{
-			map[x][y].z_pos = ft_atoi(c_data + i);
+			map->vertex[x][y].z_pos = ft_atoi(c_data + i);
 			y++;
 			while (c_data[i] != 32 && c_data[i] != '\n' && c_data[i] != '\0')
 				i++;
@@ -102,22 +120,25 @@ void	fill_map_data(t_pixel **map, char *c_data)
 	}
 }
 
-t_pixel	**parsing_char_to_pixel(char *file_name)
+t_map	parsing(char *file_name)
 {
-	t_pixel	**map;
-	char	buffer[1024];
+	t_map	map;
+	char	*buffer;
 	char	*c_data;
 	int		bytes;
 
 	int fd;
 	bytes = 1;
 	fd = open(file_name, O_RDONLY);
-	while (bytes != 0)
+	buffer = get_next_line(fd);
+	c_data = NULL;
+	// ft_bzero(c_data, ft_strlen(c_data));
+	while (buffer != NULL)
 	{
-		bytes = read(fd, buffer, 1024);
 		c_data = ft_strjoin(c_data, buffer);
+		buffer = get_next_line(fd);
 	}
-	map = create_empty_map(get_x(c_data), get_y(c_data));
-	fill_map_data(map, c_data);
+	map = init_map(get_x(c_data), get_y(c_data));
+	fill_map_data(&map, c_data);
 	return (map);
 }

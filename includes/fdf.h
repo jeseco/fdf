@@ -1,5 +1,14 @@
-
-// [ ] clean this shit! 
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   fdf.h                                              :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jcourtem <jcourtem@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/03/30 12:13:31 by jcourtem          #+#    #+#             */
+/*   Updated: 2022/03/30 12:41:01 by jcourtem         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #ifndef FDF_H
 # define FDF_H
@@ -18,11 +27,19 @@
 # define HEIGHT 		1080
 # define ESC_KEY		53
 
-typedef struct s_pixel {
+typedef struct s_vertex {
 	int	x_pos;
 	int	y_pos;
 	int	z_pos;
-}		t_pixel;
+	int color;
+}	t_vertex;
+
+typedef struct s_map {
+	int 		x_size;
+	int 		y_size;
+	int			base;
+	t_vertex	**vertex;
+}	t_map;
 
 typedef struct s_mlx{
 	void *server;
@@ -37,9 +54,7 @@ typedef struct s_data {
 	int		endian;
 }		t_data;
 
-// function definitions:
-
-// 		from fdf_utils: 
+// 			from fdf_utils: 
 int		creat_trgb(int t, int r, int g, int b);
 
 int		get_t(int trgb);
@@ -56,13 +71,13 @@ void	my_mlx_pixel_put(t_data *data, int x, int y, int color);
 
 int		get_x(char *c_data);
 
-int 	get_y(char *c_data);
+int		get_y(char *c_data);
 
-t_pixel	**parsing_char_to_pixel(char *str);
+t_map	parsing(char *str);
 
-void	draw_line(t_data *img, t_pixel start, t_pixel end);
+void	draw_line(t_mlx *mlx, t_vertex start, t_vertex end);
 
-void 	render(char *str, t_mlx mlx);
+void 	render(t_map map, t_mlx *mlx);
 
 int 	handle_key_input(int key, t_mlx *mlx);
 
