@@ -6,7 +6,7 @@
 /*   By: jcourtem <jcourtem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/30 12:13:31 by jcourtem          #+#    #+#             */
-/*   Updated: 2022/03/30 12:41:01 by jcourtem         ###   ########.fr       */
+/*   Updated: 2022/04/06 15:57:34 by jcourtem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,19 +31,19 @@ typedef struct s_vertex {
 	int	x_pos;
 	int	y_pos;
 	int	z_pos;
-	int color;
+	int	color;
 }	t_vertex;
 
 typedef struct s_map {
-	int 		x_size;
-	int 		y_size;
+	int			x_size;
+	int			y_size;
 	int			base;
 	t_vertex	**vertex;
 }	t_map;
 
 typedef struct s_mlx{
-	void *server;
-	void *window;
+	void	*server;
+	void	*window;
 }		t_mlx;
 
 typedef struct s_data {
@@ -54,18 +54,17 @@ typedef struct s_data {
 	int		endian;
 }		t_data;
 
-// 			from fdf_utils: 
 int		creat_trgb(int t, int r, int g, int b);
 
 int		get_t(int trgb);
 
 int		get_r(int trgb);
 
-int 	get_g(int trgb);
+int		get_g(int trgb);
 
-int 	get_b(int trgb);
+int		get_b(int trgb);
 
-int 	absolute(int a);
+int		absolute(int a);
 
 void	my_mlx_pixel_put(t_data *data, int x, int y, int color);
 
@@ -75,10 +74,12 @@ int		get_y(char *c_data);
 
 t_map	parsing(char *str);
 
-void	draw_line(t_mlx *mlx, t_vertex start, t_vertex end);
+void	draw_line(t_vertex start, t_vertex end, t_mlx *mlx);
 
-void 	render(t_map map, t_mlx *mlx);
+void	render(t_map map, t_mlx *mlx);
 
-int 	handle_key_input(int key, t_mlx *mlx);
+int		handle_key_input(int key, t_mlx *mlx);
+
+t_map	init_map(int x, int y);
 
 #endif

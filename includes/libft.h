@@ -6,7 +6,7 @@
 /*   By: jcourtem <jcourtem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/16 11:38:30 by JEAN-SEBA         #+#    #+#             */
-/*   Updated: 2022/03/23 16:20:34 by jcourtem         ###   ########.fr       */
+/*   Updated: 2022/04/06 16:14:32 by jcourtem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,8 @@ size_t			ft_strlcpy(char *dest, const char *src, size_t dstsize);
 
 size_t			ft_strlcat(char *dest, const char *src, size_t dest_size);
 
-char			*ft_strnstr(const char *haystack, const char *needle, size_t len);
+char			*ft_strnstr(const char *haystack, const char *needle, \
+size_t len);
 
 int				ft_atoi(const char *str);
 
@@ -113,7 +114,8 @@ void			ft_lstclear(t_list **lst, void (*del)(void*));
 
 void			ft_lstiter(t_list *lst, void (*f)(void *));
 
-t_list			*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *));
+t_list			*ft_lstmap(t_list *lst, void *(*f)(void *), \
+void (*del)(void *));
 
 void			ft_putchar_fd(char c, int fd);
 

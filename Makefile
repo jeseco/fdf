@@ -5,7 +5,7 @@ FILES	= srcs/fdf_main.c \
 		  srcs/fdf_parsing.c \
 		  srcs/fdf_utils.c \
 		  srcs/fdf_rendering.c \
-		  srcs/fdf_draw_line.c
+		  srcs/fdf_map_init.c 
 
 .PHONY: clean fclean re libft test
 
