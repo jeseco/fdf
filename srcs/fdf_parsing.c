@@ -6,7 +6,7 @@
 /*   By: jcourtem <jcourtem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/02 09:33:27 by jcourtem          #+#    #+#             */
-/*   Updated: 2022/04/08 11:49:21 by jcourtem         ###   ########.fr       */
+/*   Updated: 2022/04/08 12:37:08 by jcourtem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,9 +84,12 @@ t_map	parsing(int fd)
 	while (buffer != NULL)
 	{
 		c_data = ft_strjoin(c_data, buffer);
+		free (buffer);
 		buffer = get_next_line(fd);
 	}
+	free (buffer);
 	map = init_map(get_x(c_data), get_y(c_data));
 	fill_map_data(&map, c_data);
+	free (c_data);
 	return (map);
 }

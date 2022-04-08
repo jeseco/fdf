@@ -6,7 +6,7 @@
 /*   By: jcourtem <jcourtem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/16 11:38:30 by JEAN-SEBA         #+#    #+#             */
-/*   Updated: 2022/04/06 16:14:32 by jcourtem         ###   ########.fr       */
+/*   Updated: 2022/04/08 12:22:33 by jcourtem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ char			*ft_strdup(const char *s1);
 
 char			*ft_substr(char const *s, unsigned int start, size_t len);
 
-char			*ft_strjoin(char	const *s1, char const *s2);
+char			*ft_strjoin(char *s1, char *s2);
 
 char			*ft_strtrim(char const *s1, char const *set);
 
