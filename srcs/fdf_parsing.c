@@ -6,15 +6,11 @@
 /*   By: jcourtem <jcourtem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/02 09:33:27 by jcourtem          #+#    #+#             */
-/*   Updated: 2022/04/06 15:53:47 by jcourtem         ###   ########.fr       */
+/*   Updated: 2022/04/08 11:49:21 by jcourtem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-// [ ] clean 
-
-#include <limits.h>
 #include <fcntl.h>
-#include <stdio.h>
 
 #include "../includes/fdf.h"
 #include "../includes/libft.h"
@@ -38,17 +34,21 @@ void	set_xy_coordonate(t_map *map, int x, int y)
 	}
 }
 
-void	set_z_coordonate(t_vertex vertex, char *c_data, int i)
+int	get_z_coordonate(char *c_data, int i)
 {
+	int	z_pos;
+
+	z_pos = 0;
 	if (c_data[i] >= 33 && c_data[i] <= 126)
-		vertex.z_pos = ft_atoi(c_data + i);
+		z_pos = ft_atoi(c_data + i);
+	return (z_pos);
 }
 
 void	fill_map_data(t_map *map, char *c_data)
 {
-	int	x;
-	int	y;
-	int	i;
+	int		x;
+	int		y;
+	long	i;
 
 	x = 0;
 	y = 0;
@@ -56,7 +56,7 @@ void	fill_map_data(t_map *map, char *c_data)
 	while (c_data[i])
 	{
 		set_xy_coordonate(map, x, y);
-		set_z_coordonate(map->vertex[x][y], c_data, i);
+		map->vertex[x][y].z_pos = get_z_coordonate(c_data, i);
 		y++;
 		while (c_data[i] != 32 && c_data[i] != '\n' && c_data[i] != '\0')
 			i++;
@@ -73,16 +73,12 @@ void	fill_map_data(t_map *map, char *c_data)
 	}
 }
 
-t_map	parsing(char *file_name)
+t_map	parsing(int fd)
 {
 	t_map	map;
 	char	*buffer;
 	char	*c_data;
-	int		bytes;
-	int		fd;
 
-	bytes = 1;
-	fd = open(file_name, O_RDONLY);
 	buffer = get_next_line(fd);
 	c_data = NULL;
 	while (buffer != NULL)

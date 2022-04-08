@@ -6,7 +6,7 @@
 /*   By: jcourtem <jcourtem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/06 15:34:13 by jcourtem          #+#    #+#             */
-/*   Updated: 2022/04/06 15:35:38 by jcourtem         ###   ########.fr       */
+/*   Updated: 2022/04/08 11:25:20 by jcourtem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,11 +61,14 @@ t_map	init_map(int x, int y)
 	i = 0;
 	map.x_size = x;
 	map.y_size = y;
-	map.base = 50;
+	map.base = (1455 / map.y_size) / 3;
+	if (map.base < 1)
+		map.base = 1;
 	map.vertex = (t_vertex **)malloc(sizeof(t_vertex *) * x);
-	while (i < x)
+	ft_bzero(map.vertex, map.x_size);
+	while (i <= x)
 		map.vertex[i++] = (t_vertex *)malloc(sizeof(t_vertex) * y);
-	map.vertex[0][0].x_pos = WIDTH / 2;
-	map.vertex[0][0].y_pos = 10;
+	map.vertex[0][0].x_pos = 2560 / 2;
+	map.vertex[0][0].y_pos = 20;
 	return (map);
 }

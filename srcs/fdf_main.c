@@ -6,7 +6,7 @@
 /*   By: jcourtem <jcourtem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/25 14:55:58 by jcourtem          #+#    #+#             */
-/*   Updated: 2022/04/06 15:54:34 by jcourtem         ###   ########.fr       */
+/*   Updated: 2022/04/08 11:55:59 by jcourtem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,13 +29,18 @@ int	main(int argc, char **argv)
 	t_map	map;
 	t_mlx	mlx;
 	t_data	img;
+	int		fd;
 
 	if (argc != 2)
 		return (0);
-	map = parsing(argv[1]);
+	fd = open(argv[1], O_RDONLY);
+	if (fd < 3)
+		return (0);
+	map = parsing(fd);
+	close(fd);
 	mlx.server = mlx_init();
-	mlx.window = mlx_new_window(mlx.server, 1920, 1080, "fdf");
-	img.image = mlx_new_image(mlx.server, 1920, 1080);
+	mlx.window = mlx_new_window(mlx.server, 2560, 1440, "fdf");
+	img.image = mlx_new_image(mlx.server, 2560, 1440);
 	render(map, &mlx);
 	mlx_key_hook(mlx.window, &handle_key_input, &mlx);
 	mlx_loop(mlx.server);

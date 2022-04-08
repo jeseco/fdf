@@ -6,7 +6,7 @@
 /*   By: jcourtem <jcourtem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/30 12:13:31 by jcourtem          #+#    #+#             */
-/*   Updated: 2022/04/06 15:57:34 by jcourtem         ###   ########.fr       */
+/*   Updated: 2022/04/08 11:48:33 by jcourtem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,8 @@
 
 # define RED 			0x00ff0000
 # define GREY 			0x01808080
-# define WIDTH 			1920
-# define HEIGHT 		1080
+# define WIDTH 			3840
+# define HEIGHT 		2160
 # define ESC_KEY		53
 
 typedef struct s_vertex {
@@ -72,14 +72,16 @@ int		get_x(char *c_data);
 
 int		get_y(char *c_data);
 
-t_map	parsing(char *str);
+t_map	parsing(int fd);
 
-void	draw_line(t_vertex start, t_vertex end, t_mlx *mlx);
+void	draw_line(t_vertex start, t_vertex end, t_mlx *mlx, t_map map);
 
 void	render(t_map map, t_mlx *mlx);
 
 int		handle_key_input(int key, t_mlx *mlx);
 
 t_map	init_map(int x, int y);
+
+void	swap(int *a, int *b);
 
 #endif

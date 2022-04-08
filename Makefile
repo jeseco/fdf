@@ -1,18 +1,19 @@
-NAME 	= fdf
-CC		= gcc
-CFLAGS	= -g -Wextra -Wall -Werror
-FILES	= srcs/fdf_main.c \
-		  srcs/fdf_parsing.c \
-		  srcs/fdf_utils.c \
-		  srcs/fdf_rendering.c \
-		  srcs/fdf_map_init.c 
-
-.PHONY: clean fclean re libft test
+NAME 		= fdf
+CC			= gcc
+CFLAGS		= -g -Wextra -Wall -Werror
+MAIN		= srcs/fdf_main.c
+FILES		= srcs/fdf_parsing.c \
+			  srcs/fdf_utils.c \
+		      srcs/fdf_rendering.c \
+			  srcs/fdf_map_init.c 
+TEST_FILES	= test.c
 
 all : $(NAME) 
 
 $(NAME): libft
-	$(CC) $(CFLAGS) $(FILES) -lmlx libft/libft.a -framework OpenGL -framework Appkit -o $(NAME)
+	$(CC) $(CFLAGS) $(MAIN) $(FILES) -lmlx libft/libft.a -framework OpenGL -framework Appkit -o $(NAME)
+
+.PHONY: clean fclean re libft test
 
 libft:
 	cd libft && $(MAKE)
@@ -25,3 +26,6 @@ fclean: clean
 	cd libft && make fclean
 
 re: fclean all
+
+test: libft
+	$(CC) $(CFLAGS) $(TEST_FILES) $(FILES) -lmlx libft/libft.a -framework OpenGL -framework Appkit -o test

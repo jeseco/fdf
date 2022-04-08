@@ -6,7 +6,7 @@
 /*   By: jcourtem <jcourtem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/30 12:13:24 by jcourtem          #+#    #+#             */
-/*   Updated: 2022/04/06 16:37:49 by jcourtem         ###   ########.fr       */
+/*   Updated: 2022/04/08 11:40:17 by jcourtem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,46 +22,71 @@ int	same_coor(t_vertex start, t_vertex end)
 	return (1);
 }
 
-void	update_coor(t_vertex *line, int dx, int dy, int *p)
+void	update_coor_y(t_vertex *start, t_vertex *end, int *d, int *p)
 {
 	if (*p > 0)
 	{
-		*p += 2 * dy - 2 * dx;
-		if (line[0].x_pos < line[1].x_pos)
-			line[0].x_pos++;
+		*p += 2 * d[0] - 2 * d[1];
+		if (start->y_pos < end->y_pos)
+			start->y_pos++;
 		else
-			line[0].x_pos--;
-		if (line[0].y_pos < line[1].y_pos)
-			line[0].y_pos++;
+			start->y_pos--;
+		if (start->x_pos < end->x_pos)
+			start->x_pos++;
 		else
-			line[0].y_pos--;
+			start->x_pos--;
 	}
-	else if (*p < 0)
+	else if (*p <= 0)
 	{
-		*p += 2 * dy;
-		if (line[0].x_pos < line[1].x_pos)
-			line[0].x_pos++;
+		*p += 2 * d[0];
+		if (start->y_pos < end->y_pos)
+			start->y_pos++;
 		else
-			line[0].x_pos--;
+			start->y_pos--;
 	}
 }
 
-void	draw_line(t_vertex start, t_vertex end, t_mlx *mlx)
+void	update_coor_x(t_vertex *start, t_vertex *end, int *d, int *p)
 {
-	int			dx;
-	int			dy;
-	int			p;
-	t_vertex	line[2];
+	if (*p > 0)
+	{
+		*p += 2 * d[1] - 2 * d[0];
+		if (start->x_pos < end->x_pos)
+			start->x_pos++;
+		else
+			start->x_pos--;
+		if (start->y_pos < end->y_pos)
+			start->y_pos++;
+		else
+			start->y_pos--;
+	}
+	else if (*p <= 0)
+	{
+		*p += 2 * d[1];
+		if (start->x_pos < end->x_pos)
+			start->x_pos++;
+		else
+			start->x_pos--;
+	}
+}
 
-	dx = absolute(end.x_pos - start.x_pos);
-	dy = absolute(end.y_pos - start.y_pos);
-	p = 2 * dy - dx;
-	line[0] = start;
-	line[1] = end;
-	while (!(same_coor(line[0], line[1])))
+void	draw_line(t_vertex start, t_vertex end, t_mlx *mlx, t_map map)
+{
+	int			d[2];
+	int			p;
+
+	start.y_pos -= start.z_pos * (map.base);
+	end.y_pos -= end.z_pos * (map.base);
+	d[0] = absolute(end.x_pos - start.x_pos);
+	d[1] = absolute(end.y_pos - start.y_pos);
+	p = 2 * d[1] - d[0];
+	while (!(same_coor(start, end)))
 	{
 		mlx_pixel_put(mlx->server, mlx->window, start.x_pos, start.y_pos, RED);
-		update_coor(line, dx, dy, &p);
+		if (d[0] > d[1])
+			update_coor_x(&start, &end, d, &p);
+		else
+			update_coor_y(&start, &end, d, &p);
 	}
 }
 
@@ -77,11 +102,11 @@ void	render(t_map map, t_mlx *mlx)
 		while (y + 1 < map.y_size)
 		{
 			if (x != 0 && y == 0)
-				draw_line(map.vertex[x][y], map.vertex[x - 1][y], mlx);
-			draw_line(map.vertex[x][y], map.vertex[x][y + 1], mlx);
+				draw_line(map.vertex[x][y], map.vertex[x - 1][y], mlx, map);
+			draw_line(map.vertex[x][y], map.vertex[x][y + 1], mlx, map);
 			y++;
 			if (x != 0 && y != 0)
-				draw_line(map.vertex[x][y], map.vertex[x -1][y], mlx);
+				draw_line(map.vertex[x][y], map.vertex[x -1][y], mlx, map);
 		}
 		x++;
 	}
