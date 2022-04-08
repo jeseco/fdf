@@ -6,7 +6,7 @@
 /*   By: jcourtem <jcourtem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/30 12:13:31 by jcourtem          #+#    #+#             */
-/*   Updated: 2022/04/08 12:11:42 by jcourtem         ###   ########.fr       */
+/*   Updated: 2022/04/08 12:52:52 by jcourtem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ typedef struct s_map {
 typedef struct s_mlx{
 	void	*server;
 	void	*window;
-	void 	*image;
+	void	*image;
 }		t_mlx;
 
 typedef struct s_data {
