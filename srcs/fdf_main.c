@@ -6,7 +6,7 @@
 /*   By: jcourtem <jcourtem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/25 14:55:58 by jcourtem          #+#    #+#             */
-/*   Updated: 2022/04/20 14:48:49 by jcourtem         ###   ########.fr       */
+/*   Updated: 2022/04/20 15:25:52 by jcourtem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	free_map(t_map *map)
 
 int	handle_key_input(int key, t_mlx *mlx)
 {
-	if (key == ESC_KEY)
+	if (key == ESC_KEY || key == 2)
 	{
 		mlx_destroy_image(mlx->server, mlx->image);
 		mlx_destroy_window(mlx->server, mlx->window);
@@ -70,14 +70,13 @@ int	main(int argc, char **argv)
 		return (0);
 	map = parsing(fd);
 	close(fd);
-	if (map.error)
-		return (0);
 	mlx.server = mlx_init();
 	mlx.window = mlx_new_window(mlx.server, 2560, 1440, "fdf");
 	mlx.image = mlx_new_image(mlx.server, 2560, 1440);
 	render(map, &mlx);
 	free_map(&map);
 	mlx_hook(mlx.window, 2, 3, &handle_key_input, &mlx);
+	mlx_hook(mlx.window, 17, 0, &handle_key_input, &mlx);
 	mlx_loop(mlx.server);
 	return (0);
 }
