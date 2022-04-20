@@ -6,7 +6,7 @@
 /*   By: jcourtem <jcourtem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/30 12:13:31 by jcourtem          #+#    #+#             */
-/*   Updated: 2022/04/20 14:22:09 by jcourtem         ###   ########.fr       */
+/*   Updated: 2022/04/20 15:04:54 by jcourtem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,6 @@ typedef struct s_map {
 	int			y_size;
 	int			base;
 	t_vertex	**vertex;
-	int			error;
 }	t_map;
 
 typedef struct s_mlx{

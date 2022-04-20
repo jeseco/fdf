@@ -6,7 +6,7 @@
 /*   By: jcourtem <jcourtem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/02 09:33:27 by jcourtem          #+#    #+#             */
-/*   Updated: 2022/04/20 14:23:14 by jcourtem         ###   ########.fr       */
+/*   Updated: 2022/04/20 15:03:39 by jcourtem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,18 +81,13 @@ t_map	parsing(int fd)
 	buffer = get_next_line(fd);
 	c_data = NULL;
 	line_len = ft_strlen(buffer);
-	while (buffer != NULL && ft_strlen(buffer) == line_len)
+	while (buffer != NULL)
 	{
 		c_data = ft_strjoin(c_data, buffer);
 		buffer = get_next_line(fd);
 	}
 	map = init_map(get_x(c_data), get_y(c_data));
 	fill_map_data(&map, c_data);
-	if (buffer && ft_strlen(buffer) != line_len)
-	{
-		ft_printf("Found different line len. Exiting!");
-		map.error = 1;
-	}
 	free (buffer);
 	free (c_data);
 	return (map);
