@@ -6,7 +6,7 @@
 /*   By: jcourtem <jcourtem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/06 15:34:13 by jcourtem          #+#    #+#             */
-/*   Updated: 2022/04/08 12:51:30 by jcourtem         ###   ########.fr       */
+/*   Updated: 2022/04/20 14:47:11 by jcourtem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,5 +73,6 @@ t_map	init_map(int x, int y)
 	}
 	map.vertex[0][0].x_pos = 2560 / 2;
 	map.vertex[0][0].y_pos = 20;
+	map.error = 0;
 	return (map);
 }

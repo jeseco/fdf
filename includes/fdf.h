@@ -6,7 +6,7 @@
 /*   By: jcourtem <jcourtem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/30 12:13:31 by jcourtem          #+#    #+#             */
-/*   Updated: 2022/04/08 12:52:52 by jcourtem         ###   ########.fr       */
+/*   Updated: 2022/04/20 14:22:09 by jcourtem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 # include <unistd.h>
 # include <fcntl.h>
 # include <mlx.h>
+# include <stdbool.h>
 
 # include "libft.h"
 
@@ -39,6 +40,7 @@ typedef struct s_map {
 	int			y_size;
 	int			base;
 	t_vertex	**vertex;
+	int			error;
 }	t_map;
 
 typedef struct s_mlx{
@@ -67,7 +69,7 @@ int		get_b(int trgb);
 
 int		absolute(int a);
 
-void	my_mlx_pixel_put(t_data *data, int x, int y, int color);
+void	my_mlx_pixel_put(t_data *img, int x, int y, int color);
 
 int		get_x(char *c_data);
 
@@ -75,7 +77,7 @@ int		get_y(char *c_data);
 
 t_map	parsing(int fd);
 
-void	draw_line(t_vertex start, t_vertex end, t_mlx *mlx, t_map map);
+void	draw_line(t_vertex start, t_vertex end, t_data *img, t_map map);
 
 void	render(t_map map, t_mlx *mlx);
 

@@ -6,7 +6,7 @@
 /*   By: jcourtem <jcourtem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/30 12:13:24 by jcourtem          #+#    #+#             */
-/*   Updated: 2022/04/08 11:40:17 by jcourtem         ###   ########.fr       */
+/*   Updated: 2022/04/20 13:28:17 by jcourtem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ void	update_coor_x(t_vertex *start, t_vertex *end, int *d, int *p)
 	}
 }
 
-void	draw_line(t_vertex start, t_vertex end, t_mlx *mlx, t_map map)
+void	draw_line(t_vertex start, t_vertex end, t_data *img, t_map map)
 {
 	int			d[2];
 	int			p;
@@ -82,7 +82,7 @@ void	draw_line(t_vertex start, t_vertex end, t_mlx *mlx, t_map map)
 	p = 2 * d[1] - d[0];
 	while (!(same_coor(start, end)))
 	{
-		mlx_pixel_put(mlx->server, mlx->window, start.x_pos, start.y_pos, RED);
+		my_mlx_pixel_put(img, start.x_pos, start.y_pos, RED);
 		if (d[0] > d[1])
 			update_coor_x(&start, &end, d, &p);
 		else
@@ -92,9 +92,12 @@ void	draw_line(t_vertex start, t_vertex end, t_mlx *mlx, t_map map)
 
 void	render(t_map map, t_mlx *mlx)
 {
-	int	x;
-	int	y;
+	int		x;
+	int		y;
+	t_data	img;
 
+	img.image = mlx_new_image(mlx->server, WIDTH, HEIGHT);
+	img.addr = mlx_get_data_addr(img.image, &img.bits_per_pixel, &img.line_length, &img.endian);
 	x = 0;
 	while (x < map.x_size)
 	{
@@ -102,12 +105,13 @@ void	render(t_map map, t_mlx *mlx)
 		while (y + 1 < map.y_size)
 		{
 			if (x != 0 && y == 0)
-				draw_line(map.vertex[x][y], map.vertex[x - 1][y], mlx, map);
-			draw_line(map.vertex[x][y], map.vertex[x][y + 1], mlx, map);
+				draw_line(map.vertex[x][y], map.vertex[x - 1][y], &img, map);
+			draw_line(map.vertex[x][y], map.vertex[x][y + 1], &img, map);
 			y++;
 			if (x != 0 && y != 0)
-				draw_line(map.vertex[x][y], map.vertex[x -1][y], mlx, map);
+				draw_line(map.vertex[x][y], map.vertex[x -1][y], &img, map);
 		}
 		x++;
 	}
+	mlx_put_image_to_window(mlx->server, mlx->window, img.image, 0, 0);
 }

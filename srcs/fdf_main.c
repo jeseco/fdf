@@ -6,13 +6,13 @@
 /*   By: jcourtem <jcourtem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/25 14:55:58 by jcourtem          #+#    #+#             */
-/*   Updated: 2022/04/08 12:33:13 by jcourtem         ###   ########.fr       */
+/*   Updated: 2022/04/20 14:24:21 by jcourtem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-// [ ] clean 
 #include <time.h>
 #include <mlx.h>
+#include <stdbool.h>
 
 #include "../includes/fdf.h"
 #include "../includes/libft.h"
@@ -40,6 +40,21 @@ int	handle_key_input(int key, t_mlx *mlx)
 	exit (0);
 }
 
+bool	correct_ext(char *path)
+{
+	while (*path != '\0')
+	{
+		while (*path != '.' && *path != '\0')
+			path++;
+		if (*path == '.')
+			if (!ft_strncmp(path, ".fdf", 4))
+				return (true);
+		if (*path != '\0')
+			path++;
+	}
+	return (false);
+}
+
 int	main(int argc, char **argv)
 {
 	t_map	map;
@@ -48,11 +63,15 @@ int	main(int argc, char **argv)
 
 	if (argc != 2)
 		return (0);
+	if (!(correct_ext(argv[1])))
+		return (0);
 	fd = open(argv[1], O_RDONLY);
 	if (fd < 3)
 		return (0);
 	map = parsing(fd);
 	close(fd);
+	if (map.error)
+		return (0);
 	mlx.server = mlx_init();
 	mlx.window = mlx_new_window(mlx.server, 2560, 1440, "fdf");
 	mlx.image = mlx_new_image(mlx.server, 2560, 1440);

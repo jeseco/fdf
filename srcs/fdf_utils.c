@@ -6,11 +6,10 @@
 /*   By: jcourtem <jcourtem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/02 09:33:35 by jcourtem          #+#    #+#             */
-/*   Updated: 2022/04/08 11:36:27 by jcourtem         ###   ########.fr       */
+/*   Updated: 2022/04/20 13:57:24 by jcourtem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-// [ ] clean this shit! 
 #include <stdio.h>
 
 #include <mlx.h>
@@ -31,4 +30,12 @@ void	swap(int *a, int *b)
 	temp = *a;
 	*a = *b;
 	*b = temp;
+}
+
+void	my_mlx_pixel_put(t_data *img, int x, int y, int color)
+{
+	char	*dst;
+
+	dst = img->addr + (y * img->line_length + x * (img->bits_per_pixel / 8));
+	*(unsigned int*)dst = color;
 }

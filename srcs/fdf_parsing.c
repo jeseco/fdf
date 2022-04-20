@@ -6,11 +6,9 @@
 /*   By: jcourtem <jcourtem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/02 09:33:27 by jcourtem          #+#    #+#             */
-/*   Updated: 2022/04/08 12:37:08 by jcourtem         ###   ########.fr       */
+/*   Updated: 2022/04/20 14:23:14 by jcourtem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
-#include <fcntl.h>
 
 #include "../includes/fdf.h"
 #include "../includes/libft.h"
@@ -78,18 +76,24 @@ t_map	parsing(int fd)
 	t_map	map;
 	char	*buffer;
 	char	*c_data;
+	size_t	line_len;
 
 	buffer = get_next_line(fd);
 	c_data = NULL;
-	while (buffer != NULL)
+	line_len = ft_strlen(buffer);
+	while (buffer != NULL && ft_strlen(buffer) == line_len)
 	{
 		c_data = ft_strjoin(c_data, buffer);
-		free (buffer);
 		buffer = get_next_line(fd);
 	}
-	free (buffer);
 	map = init_map(get_x(c_data), get_y(c_data));
 	fill_map_data(&map, c_data);
+	if (buffer && ft_strlen(buffer) != line_len)
+	{
+		ft_printf("Found different line len. Exiting!");
+		map.error = 1;
+	}
+	free (buffer);
 	free (c_data);
 	return (map);
 }
