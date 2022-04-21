@@ -6,7 +6,7 @@
 /*   By: jcourtem <jcourtem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/30 12:13:24 by jcourtem          #+#    #+#             */
-/*   Updated: 2022/04/20 13:28:17 by jcourtem         ###   ########.fr       */
+/*   Updated: 2022/04/21 09:49:53 by jcourtem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,8 @@ void	render(t_map map, t_mlx *mlx)
 	t_data	img;
 
 	img.image = mlx_new_image(mlx->server, WIDTH, HEIGHT);
-	img.addr = mlx_get_data_addr(img.image, &img.bits_per_pixel, &img.line_length, &img.endian);
+	img.addr = mlx_get_data_addr(img.image, &img.bits_per_pixel, \
+		&img.line_length, &img.endian);
 	x = 0;
 	while (x < map.x_size)
 	{

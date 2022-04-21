@@ -1,6 +1,6 @@
 NAME 		= fdf
 CC			= gcc
-CFLAGS		= -g -Wextra -Wall -Werror
+CFLAGS		= -Wextra -Wall -Werror
 MAIN		= srcs/fdf_main.c
 FILES		= srcs/fdf_parsing.c \
 			  srcs/fdf_utils.c \
