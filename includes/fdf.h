@@ -6,7 +6,7 @@
 /*   By: jcourtem <jcourtem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/30 12:13:31 by jcourtem          #+#    #+#             */
-/*   Updated: 2022/04/21 09:54:00 by jcourtem         ###   ########.fr       */
+/*   Updated: 2022/04/27 10:13:20 by jcourtem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,12 +43,6 @@ typedef struct s_map {
 	int			color;
 }	t_map;
 
-typedef struct s_mlx{
-	void	*server;
-	void	*window;
-	void	*image;
-}		t_mlx;
-
 typedef struct s_data {
 	void	*image;
 	char	*addr;
@@ -56,6 +50,12 @@ typedef struct s_data {
 	int		line_length;
 	int		endian;
 }		t_data;
+
+typedef struct s_mlx{
+	void	*server;
+	void	*window;
+	t_data	*image;
+}		t_mlx;
 
 int		creat_trgb(int t, int r, int g, int b);
 

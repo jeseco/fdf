@@ -6,7 +6,7 @@
 /*   By: jcourtem <jcourtem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/25 14:55:58 by jcourtem          #+#    #+#             */
-/*   Updated: 2022/04/20 15:25:52 by jcourtem         ###   ########.fr       */
+/*   Updated: 2022/04/27 10:01:53 by jcourtem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,9 +32,10 @@ void	free_map(t_map *map)
 
 int	handle_key_input(int key, t_mlx *mlx)
 {
-	if (key == ESC_KEY || key == 2)
+	if (key == ESC_KEY || key == 17)
 	{
-		mlx_destroy_image(mlx->server, mlx->image);
+		free (mlx->image);
+		mlx_destroy_image(mlx->server, mlx->image->image);
 		mlx_destroy_window(mlx->server, mlx->window);
 	}
 	exit (0);
@@ -55,6 +56,17 @@ bool	correct_ext(char *path)
 	return (false);
 }
 
+t_data	*init_img(t_mlx *mlx)
+{
+	t_data	*img;
+
+	img = ft_calloc(1, sizeof(t_data));
+	img->image = mlx_new_image(mlx->server, WIDTH, HEIGHT);
+	img->addr = mlx_get_data_addr(img->image, &img->bits_per_pixel, \
+		&img->line_length, &img->endian);
+	return (img);
+}
+
 int	main(int argc, char **argv)
 {
 	t_map	map;
@@ -71,8 +83,8 @@ int	main(int argc, char **argv)
 	map = parsing(fd);
 	close(fd);
 	mlx.server = mlx_init();
-	mlx.window = mlx_new_window(mlx.server, 2560, 1440, "fdf");
-	mlx.image = mlx_new_image(mlx.server, 2560, 1440);
+	mlx.window = mlx_new_window(mlx.server, WIDTH, HEIGHT, "fdf");
+	mlx.image = init_img(&mlx);
 	render(map, &mlx);
 	free_map(&map);
 	mlx_hook(mlx.window, 2, 3, &handle_key_input, &mlx);
@@ -80,3 +92,4 @@ int	main(int argc, char **argv)
 	mlx_loop(mlx.server);
 	return (0);
 }
+	

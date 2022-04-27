@@ -6,7 +6,7 @@
 #    By: jcourtem <jcourtem@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/05/26 10:27:53 by JEAN-SEBA         #+#    #+#              #
-#    Updated: 2022/04/05 09:48:50 by jcourtem         ###   ########.fr        #
+#    Updated: 2022/04/22 09:46:19 by jcourtem         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -74,24 +74,15 @@ FILES		= 	ft_memset.c \
 				ft_put_u.c \
 				ft_atol.c
 
-PERSONAL_FUNC = personal_function/ft_intversion.c \
-				personal_function/ft_itohex.c \
-				personal_funciton/ft_putptr.c \
-
 OBJS = $(FILES:.c=.o)
-
-OBJSB = $(BONUSF:.c=.o)
-
-OBJSP = $(PERSONAL_FUNC:.c=.o)
 
 all: $(NAME) 
 
-$(NAME): $(OBJS) $(BONUS_OBJS) $(OBJSP) $(P_OBJS)
-	ar rcs $(NAME) $(P_OBJS) *.o
+$(NAME): $(OBJS)
+	ar rcs $(NAME) $(OBJS) 
 	ranlib $(NAME)
 
-$(P_OBJS):
-	cd libftprintf/
+$(OBJS):
 
 .PHONY: clean fclean re
 
@@ -105,6 +96,3 @@ re: fclean all
 
 bonus: $(OBJSB) 
 
-$(OBJSB):
-
-$(OBJSP):

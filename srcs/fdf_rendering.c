@@ -6,7 +6,7 @@
 /*   By: jcourtem <jcourtem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/30 12:13:24 by jcourtem          #+#    #+#             */
-/*   Updated: 2022/04/21 09:49:53 by jcourtem         ###   ########.fr       */
+/*   Updated: 2022/04/27 10:01:21 by jcourtem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void	update_coor_y(t_vertex *start, t_vertex *end, int *d, int *p)
 			start->y_pos--;
 		if (start->x_pos < end->x_pos)
 			start->x_pos++;
-		else
+	else
 			start->x_pos--;
 	}
 	else if (*p <= 0)
@@ -72,8 +72,8 @@ void	update_coor_x(t_vertex *start, t_vertex *end, int *d, int *p)
 
 void	draw_line(t_vertex start, t_vertex end, t_data *img, t_map map)
 {
-	int			d[2];
-	int			p;
+	int	d[2];
+	int	p;
 
 	start.y_pos -= start.z_pos * (map.base);
 	end.y_pos -= end.z_pos * (map.base);
@@ -92,13 +92,9 @@ void	draw_line(t_vertex start, t_vertex end, t_data *img, t_map map)
 
 void	render(t_map map, t_mlx *mlx)
 {
-	int		x;
-	int		y;
-	t_data	img;
+	int	x;
+	int	y;
 
-	img.image = mlx_new_image(mlx->server, WIDTH, HEIGHT);
-	img.addr = mlx_get_data_addr(img.image, &img.bits_per_pixel, \
-		&img.line_length, &img.endian);
 	x = 0;
 	while (x < map.x_size)
 	{
@@ -106,13 +102,15 @@ void	render(t_map map, t_mlx *mlx)
 		while (y + 1 < map.y_size)
 		{
 			if (x != 0 && y == 0)
-				draw_line(map.vertex[x][y], map.vertex[x - 1][y], &img, map);
-			draw_line(map.vertex[x][y], map.vertex[x][y + 1], &img, map);
+				draw_line(map.vertex[x][y], map.vertex[x - 1][y],
+					mlx->image, map);
+			draw_line(map.vertex[x][y], map.vertex[x][y + 1], mlx->image, map);
 			y++;
 			if (x != 0 && y != 0)
-				draw_line(map.vertex[x][y], map.vertex[x -1][y], &img, map);
+				draw_line(map.vertex[x][y], map.vertex[x -1][y],
+					mlx->image, map);
 		}
 		x++;
 	}
-	mlx_put_image_to_window(mlx->server, mlx->window, img.image, 0, 0);
+	mlx_put_image_to_window(mlx->server, mlx->window, mlx->image->image, 0, 0);
 }
