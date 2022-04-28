@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fdf_parsing.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jcourtem <jcourtem@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jcourtem <marvin@42quebec.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/02/02 09:33:27 by jcourtem          #+#    #+#             */
-/*   Updated: 2022/04/20 15:03:39 jcourtem         ###   ########.fr       */
+/*   Created: 2022/04/28 13:39:57 by jcourtem          #+#    #+#             */
+/*   Updated: 2022/04/28 13:40:17 by jcourtem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,15 +76,22 @@ t_map	parsing(int fd)
 	t_map	map;
 	char	*buffer;
 	char	*c_data;
-	size_t	line_len;
 
 	buffer = get_next_line(fd);
 	c_data = NULL;
-	line_len = ft_strlen(buffer);
 	while (buffer != NULL)
 	{
 		c_data = ft_strjoin(c_data, buffer);
+		free (buffer);
+		if (!map.y_size)
+			map.y_size = get_y(c_data);
 		buffer = get_next_line(fd);
+		if (get_y(buffer) != map.y_size && buffer != NULL)
+		{
+			printf("Found wrong line len!");
+			free (buffer);
+			exit(0);
+		}
 	}
 	map = init_map(get_x(c_data), get_y(c_data));
 	fill_map_data(&map, c_data);

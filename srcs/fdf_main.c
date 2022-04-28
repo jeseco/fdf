@@ -6,7 +6,7 @@
 /*   By: jcourtem <jcourtem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/25 14:55:58 by jcourtem          #+#    #+#             */
-/*   Updated: 2022/04/27 10:01:53 by jcourtem         ###   ########.fr       */
+/*   Updated: 2022/04/28 13:53:02 by jcourtem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,4 +92,3 @@ int	main(int argc, char **argv)
 	mlx_loop(mlx.server);
 	return (0);
 }
-	

@@ -6,7 +6,7 @@
 /*   By: jcourtem <jcourtem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/03 11:40:00 by JEAN-SEBA         #+#    #+#             */
-/*   Updated: 2022/04/08 12:37:05 by jcourtem         ###   ########.fr       */
+/*   Updated: 2022/04/28 10:08:04 by jcourtem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ char	*ft_strjoin(char *s1, char *s2)
 	if (!s1 && !s2)
 		return (ft_strdup(""));
 	if (s1 && !s2)
-		return (ft_strdup(s1));
+		return (s1);
 	if (!s1 && s2)
 		return (ft_strdup(s2));
 	s1_len = ft_strlen((char *)s1);

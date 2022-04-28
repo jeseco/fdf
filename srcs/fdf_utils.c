@@ -6,11 +6,9 @@
 /*   By: jcourtem <jcourtem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/02 09:33:35 by jcourtem          #+#    #+#             */
-/*   Updated: 2022/04/22 10:05:53 by jcourtem         ###   ########.fr       */
+/*   Updated: 2022/04/28 10:09:19 by jcourtem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
-#include <stdio.h>
 
 #include <mlx.h>
 

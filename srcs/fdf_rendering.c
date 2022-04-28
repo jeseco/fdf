@@ -6,7 +6,7 @@
 /*   By: jcourtem <jcourtem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/30 12:13:24 by jcourtem          #+#    #+#             */
-/*   Updated: 2022/04/27 10:01:21 by jcourtem         ###   ########.fr       */
+/*   Updated: 2022/04/28 13:40:41 by jcourtem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void	update_coor_y(t_vertex *start, t_vertex *end, int *d, int *p)
 			start->y_pos--;
 		if (start->x_pos < end->x_pos)
 			start->x_pos++;
-	else
+		else
 			start->x_pos--;
 	}
 	else if (*p <= 0)

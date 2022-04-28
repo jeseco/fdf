@@ -6,7 +6,7 @@
 /*   By: jcourtem <jcourtem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/30 12:13:31 by jcourtem          #+#    #+#             */
-/*   Updated: 2022/04/27 10:13:20 by jcourtem         ###   ########.fr       */
+/*   Updated: 2022/04/28 10:05:24 by jcourtem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 # include <fcntl.h>
 # include <mlx.h>
 # include <stdbool.h>
+# include <stdio.h>
 
 # include "libft.h"
 
